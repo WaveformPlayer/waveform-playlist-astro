@@ -26,10 +26,11 @@ Miss either and the prop typechecks and is silently dropped.
   players — usually yes (`preload`, `audioMode`, `waveformStyle`, `height` all do).
 - Add a test in `test/WaveformPlaylist.test.ts` + a `CHANGELOG.md` entry.
 
-## Known gap
-`crossOrigin` shipped across the rest of the family (2026-07-22) but was **never
-added to any of the four playlist wrappers**, including this one. Fix it when
-next touching this file.
+## History
+`crossOrigin` shipped across the rest of the family in 2026-07 but was missed in
+all four playlist wrappers — accepted by the types, silently dropped at runtime.
+Fixed in 0.4.0. That miss is why this group is now steps 12–15 of the
+`waveform-release` checklist rather than an afterthought.
 
 ## Cross-repo
 One of 15 packages that must change together — load the `waveform-release` skill.

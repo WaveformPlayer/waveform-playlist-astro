@@ -172,6 +172,7 @@ describe('<WaveformPlaylist> — minimal props', () => {
 		expectNoAttr(tag, 'data-show-play-state');
 		// Forwarded player options (spot-check across groups)
 		expectNoAttr(tag, 'data-preload');
+		expectNoAttr(tag, 'data-cross-origin');
 		expectNoAttr(tag, 'data-waveform-style');
 		expectNoAttr(tag, 'data-height');
 		expectNoAttr(tag, 'data-bar-width');
@@ -277,6 +278,19 @@ describe('<WaveformPlaylist> — forwarded player options', () => {
 		expect(getAttr(tag, 'data-bar-width')).toBe('3');
 		expect(getAttr(tag, 'data-bar-spacing')).toBe('2');
 		expect(getAttr(tag, 'data-bar-radius')).toBe('1');
+	});
+
+	it('emits the forwarded audio-loading attrs (preload, crossOrigin)', async () => {
+		const tag = containerTag(
+			await render({
+				tracks: ONE_TRACK,
+				preload: 'metadata',
+				crossOrigin: 'anonymous',
+			})
+		);
+
+		expect(getAttr(tag, 'data-preload')).toBe('metadata');
+		expect(getAttr(tag, 'data-cross-origin')).toBe('anonymous');
 	});
 
 	it('emits colorPreset only when it is dark or light (not null)', async () => {

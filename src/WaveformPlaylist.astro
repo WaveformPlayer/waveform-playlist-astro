@@ -140,6 +140,7 @@ const {
 	showPlayState,
 	// ── Forwarded player options (inherited by the embedded player) ────
 	preload,
+	crossOrigin,
 	waveformStyle,
 	height,
 	samples,
@@ -251,6 +252,7 @@ setBool('data-show-play-state', showPlayState);
 // These are read off the container by the playlist and passed straight
 // through to the embedded WaveformPlayer instance.
 setStr('data-preload', preload ?? null);
+setStr('data-cross-origin', crossOrigin ?? null);
 
 // Waveform visualisation
 setStr('data-waveform-style', waveformStyle ?? null);
