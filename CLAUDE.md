@@ -23,7 +23,7 @@ Miss either and the prop typechecks and is silently dropped.
   `waveform-player` owns the visualisation options forwarded to embedded players.
   Never re-declare either surface here.
 - Forward a new *player* option only if the playlist should pass it to its embedded
-  players — usually yes (`preload`, `audioMode`, `waveformStyle`, `height` all do).
+  players — usually yes (`preload`, `waveformStyle`, `height` all do) — never `audioMode`, which the playlist ignores since 1.8.0 (it always owns its audio).
 - Add a test in `test/WaveformPlaylist.test.ts` + a `CHANGELOG.md` entry.
 
 ## History
