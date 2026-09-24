@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+
+### Added
+
+- The hero and grid layouts: `layout` now accepts `'hero'` and `'grid'`
+  alongside `'list'` / `'minimal'` (it was typed `'list' | 'minimal'`
+  although both ship in the core), and their options are typed props,
+  emitted as the container attributes the playlist parses:
+  `showArtist` (`data-show-artist`), `coverSize` (`data-cover-size`),
+  `thumbnailSize` (`data-thumbnail-size`), `density`
+  (`'comfortable' | 'compact'`, `data-density`), `coverPosition`
+  (`'left' | 'top'`, `data-cover-position`) and `barPosition`
+  (`'top' | 'bottom'`, `data-bar-position`). Exported as
+  `WaveformPlaylistLayoutProps`. Types come from the playlist core's
+  `index.d.ts` (1.8.0 declares them all); against an older core they fall
+  back to the same 1.8.0 shapes instead of degrading to `unknown`.
+
 ## [0.4.0] — 2026-08-07
 
 ### Added

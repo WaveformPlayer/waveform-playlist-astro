@@ -66,22 +66,72 @@ export type {
 } from '@arraypress/waveform-playlist';
 
 /**
- * The playlist-specific options, picked off the playlist core's
+ * A playlist option's type, read from the installed playlist core.
+ *
+ * `@arraypress/waveform-playlist` before 1.8.0 declared only seven of its
+ * options; the hero / grid ones below reached its `[option: string]: unknown`
+ * index signature, which would type these props as `unknown`. For such a key
+ * the `Fallback` — copied from 1.8.0's `index.d.ts` — is used instead. With
+ * the peer range (`^1.8.0`) installed every key is declared, so this is
+ * exactly the core's own type and the fallback is inert.
+ */
+type PlaylistOption<K extends string, Fallback> =
+	unknown extends WaveformPlaylistOptions[K] ? Fallback : WaveformPlaylistOptions[K];
+
+/**
+ * The playlist's layout options — `layout` and the hero / grid / density
+ * options that ship with it. Typed from the playlist core (see
+ * {@link PlaylistOption}); `layout` overrides the player's own `layout`
+ * (both read `data-layout`).
+ */
+export interface WaveformPlaylistLayoutProps {
+	/**
+	 * Playlist layout. `'list'` shows the full track list; `'minimal'` a
+	 * compact button switcher; `'hero'` a now-playing unit (cover +
+	 * waveform) over a track queue; `'grid'` a cover-art grid with a
+	 * now-playing bar. (The union is written out so `'hero'` / `'grid'`
+	 * typecheck against a pre-1.8.0 core; with 1.8.0 it equals the core's.)
+	 * @default 'list'
+	 */
+	layout?: WaveformPlaylistOptions['layout'] | 'hero' | 'grid';
+	/**
+	 * Show the now-playing / per-row artist. Turn off for single-artist
+	 * albums where it would only repeat.
+	 * @default true
+	 */
+	showArtist?: PlaylistOption<'showArtist', boolean>;
+	/**
+	 * Hero cover size in px. Defaults to the waveform height plus the time
+	 * row, so the cover sits flush with the waveform column.
+	 */
+	coverSize?: PlaylistOption<'coverSize', number>;
+	/** Hero queue thumbnail / grid cover size in px. Defaults to the CSS value. */
+	thumbnailSize?: PlaylistOption<'thumbnailSize', number>;
+	/** Row density for every layout. @default 'comfortable' */
+	density?: PlaylistOption<'density', 'comfortable' | 'compact'>;
+	/** Hero / grid cover position relative to the waveform. @default 'left' */
+	coverPosition?: PlaylistOption<'coverPosition', 'left' | 'top'>;
+	/** Grid layout: now-playing bar above or below the covers. @default 'bottom' */
+	barPosition?: PlaylistOption<'barPosition', 'top' | 'bottom'>;
+}
+
+/**
+ * The remaining playlist-specific options, picked off the playlist core's
  * {@link WaveformPlaylistOptions}. Picking the named keys deliberately
  * strips the core interface's `[option: string]: unknown` pass-through
  * index signature, so {@link WaveformPlaylistProps} stays strict (a typo'd
  * prop is a type error) while still tracking the core option types.
  */
-type PlaylistContainerOptions = Pick<
-	WaveformPlaylistOptions,
-	| 'layout'
-	| 'continuous'
-	| 'expandChapters'
-	| 'showDuration'
-	| 'showChapterMarkers'
-	| 'chapterMarkerColor'
-	| 'showPlayState'
->;
+type PlaylistContainerOptions = WaveformPlaylistLayoutProps &
+	Pick<
+		WaveformPlaylistOptions,
+		| 'continuous'
+		| 'expandChapters'
+		| 'showDuration'
+		| 'showChapterMarkers'
+		| 'chapterMarkerColor'
+		| 'showPlayState'
+	>;
 
 /**
  * The WaveformPlayer options the playlist forwards to its embedded player,
@@ -94,7 +144,8 @@ type PlaylistContainerOptions = Pick<
  *    playlist strips any container-level copy.
  *  - `audioMode` — the playlist always drives a self-mode embedded player.
  *  - `layout` — the player's `layout` (`'default' | 'preview'`) collides
- *    with the playlist's own `layout` (`'list' | 'minimal'`) on the same
+ *    with the playlist's own `layout` (`'list' | 'minimal' | 'hero' |
+ *    'grid'`) on the same
  *    `data-layout` attribute; the playlist's wins, so the player's is
  *    removed here.
  *  - `style` — in an Astro component `style` is the HTML inline-style

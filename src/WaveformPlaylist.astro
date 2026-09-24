@@ -138,6 +138,12 @@ const {
 	showChapterMarkers,
 	chapterMarkerColor,
 	showPlayState,
+	showArtist,
+	coverSize,
+	thumbnailSize,
+	density,
+	coverPosition,
+	barPosition,
 	// ── Forwarded player options (inherited by the embedded player) ────
 	preload,
 	crossOrigin,
@@ -228,9 +234,9 @@ const setNum = (key: string, value: number | undefined | null): void => {
 
 /**
  * Helper — set a boolean attr as the string `'true'` / `'false'`.
- * Required because the playlist compares against `=== 'true'` (continuous,
- * showChapterMarkers) and `!== 'false'` (expandChapters, showDuration,
- * showPlayState), and the player against `=== 'true'`.
+ * An explicit `'false'` is what turns a flag off: the playlist (1.8.0+)
+ * treats a present boolean attribute as true unless it is `"false"`, and
+ * the player reads `'true'` / `'false'`. Omitted → no attr → core default.
  */
 const setBool = (key: string, value: boolean | undefined | null): void => {
 	if (value === undefined || value === null) return;
@@ -247,6 +253,15 @@ setBool('data-show-duration', showDuration);
 setBool('data-show-chapter-markers', showChapterMarkers);
 setStr('data-chapter-marker-color', chapterMarkerColor ?? null);
 setBool('data-show-play-state', showPlayState);
+// Layout options (hero / grid / density) — read by the playlist as
+// ds.showArtist, ds.coverSize, ds.thumbnailSize, ds.density,
+// ds.coverPosition, ds.barPosition.
+setBool('data-show-artist', showArtist);
+setNum('data-cover-size', coverSize);
+setNum('data-thumbnail-size', thumbnailSize);
+setStr('data-density', density ?? null);
+setStr('data-cover-position', coverPosition ?? null);
+setStr('data-bar-position', barPosition ?? null);
 
 // ─── Forwarded player options ──────────────────────────────────────────────
 // These are read off the container by the playlist and passed straight

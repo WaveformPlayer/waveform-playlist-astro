@@ -212,6 +212,46 @@ describe('<WaveformPlaylist> — playlist options', () => {
 		expect(getAttr(tag, 'data-layout')).toBe('minimal');
 	});
 
+	it('emits the hero / grid layouts verbatim', async () => {
+		const hero = containerTag(await render({ tracks: ONE_TRACK, layout: 'hero' }));
+		expect(getAttr(hero, 'data-layout')).toBe('hero');
+
+		const grid = containerTag(await render({ tracks: ONE_TRACK, layout: 'grid' }));
+		expect(getAttr(grid, 'data-layout')).toBe('grid');
+	});
+
+	it('emits the hero / grid layout options under the playlist parser\'s attribute names', async () => {
+		const tag = containerTag(
+			await render({
+				tracks: ONE_TRACK,
+				layout: 'grid',
+				showArtist: false,
+				coverSize: 120,
+				thumbnailSize: 64,
+				density: 'compact',
+				coverPosition: 'top',
+				barPosition: 'top',
+			})
+		);
+		// The playlist reads ds.showArtist / ds.coverSize / … — i.e. these.
+		expect(getAttr(tag, 'data-show-artist')).toBe('false');
+		expect(getAttr(tag, 'data-cover-size')).toBe('120');
+		expect(getAttr(tag, 'data-thumbnail-size')).toBe('64');
+		expect(getAttr(tag, 'data-density')).toBe('compact');
+		expect(getAttr(tag, 'data-cover-position')).toBe('top');
+		expect(getAttr(tag, 'data-bar-position')).toBe('top');
+	});
+
+	it('omits the hero / grid layout options when their props are omitted', async () => {
+		const tag = containerTag(await render({ tracks: ONE_TRACK }));
+		expectNoAttr(tag, 'data-show-artist');
+		expectNoAttr(tag, 'data-cover-size');
+		expectNoAttr(tag, 'data-thumbnail-size');
+		expectNoAttr(tag, 'data-density');
+		expectNoAttr(tag, 'data-cover-position');
+		expectNoAttr(tag, 'data-bar-position');
+	});
+
 	it('serialises continuous as a "true"/"false" string', async () => {
 		const on = containerTag(await render({ tracks: ONE_TRACK, continuous: true }));
 		expect(getAttr(on, 'data-continuous')).toBe('true');

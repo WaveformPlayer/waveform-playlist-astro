@@ -39,6 +39,7 @@ export default WaveformPlaylist;
 
 export type {
 	WaveformPlaylistProps,
+	WaveformPlaylistLayoutProps,
 	WaveformPlaylistTrackInput,
 	WaveformPlaylistOptions,
 	WaveformPlaylistTrack,
