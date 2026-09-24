@@ -518,6 +518,25 @@ describe('<WaveformPlaylist> — tracks', () => {
 		expectNoAttr(track, 'data-markers');
 	});
 
+	it('renders per-track waveform peaks as data-waveform (JSON array, or a URL verbatim)', async () => {
+		const peaks = [0.1, 0.5, 0.9];
+		const tracks = trackTags(
+			await render({
+				tracks: [
+					{ url: '/a.mp3', waveform: peaks },
+					{ url: '/b.mp3', waveform: '/peaks/b.json' },
+					{ url: '/c.mp3' },
+					{ url: '/d.mp3', waveform: [] },
+				],
+			})
+		);
+		expect(getAttr(tracks[0], 'data-waveform')).toBe(JSON.stringify(peaks));
+		expect(getAttr(tracks[1], 'data-waveform')).toBe('/peaks/b.json');
+		expectNoAttr(tracks[2], 'data-waveform');
+		// An empty peaks array would only make the playlist warn and decode.
+		expectNoAttr(tracks[3], 'data-waveform');
+	});
+
 	it('JSON-stringifies per-track markers, omitting the attr for empty/absent', async () => {
 		const markers = [
 			{ time: 0, label: 'Intro' },

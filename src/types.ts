@@ -206,6 +206,13 @@ export interface WaveformPlaylistTrackInput {
 	 */
 	markers?: { time: number; label?: string; color?: string }[];
 	/**
+	 * Pre-computed peaks, so the player skips decoding this track's audio.
+	 * An array is JSON-encoded into the track's `data-waveform`; a string
+	 * (e.g. a `.json` peaks URL) is emitted verbatim for the player to
+	 * resolve. Read per track by `@arraypress/waveform-playlist@1.8.0+`.
+	 */
+	waveform?: number[] | string;
+	/**
 	 * Chapters for this track. Each becomes a `[data-chapter]` child; the
 	 * `time` is in seconds and the `label` is the chapter's visible text.
 	 */

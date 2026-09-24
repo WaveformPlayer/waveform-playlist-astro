@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `WaveformPlaylistLayoutProps`. Types come from the playlist core's
   `index.d.ts` (1.8.0 declares them all); against an older core they fall
   back to the same 1.8.0 shapes instead of degrading to `unknown`.
+- Per-track `waveform` peaks on `WaveformPlaylistTrackInput`
+  (`number[] | string`), rendered as the track's `data-waveform`: an array
+  is JSON-encoded (an empty one is omitted), a string (e.g. a `.json`
+  peaks URL) emitted verbatim. With peaks the player skips decoding that
+  track's audio. Playlist 1.8.0 is the first version that reads
+  `data-waveform`.
 
 ### Fixed
 

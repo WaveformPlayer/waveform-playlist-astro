@@ -379,6 +379,13 @@ const trackList = Array.isArray(tracks) ? tracks : [];
 					? JSON.stringify(track.markers)
 					: undefined
 			}
+			data-waveform={
+				Array.isArray(track.waveform)
+					? track.waveform.length > 0
+						? JSON.stringify(track.waveform)
+						: undefined
+					: track.waveform || undefined
+			}
 		>
 			{(track.chapters ?? []).map((chapter) => (
 				<div data-chapter data-time={String(chapter.time)} data-color={chapter.color}>
