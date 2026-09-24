@@ -38,6 +38,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   inherited, but the component never destructured or emitted them — they
   typechecked and were silently dropped. `buttonRadius={0}` emits `"0"`.
 
+### Changed
+
+- **Requires `@arraypress/waveform-playlist@^1.8.0`** (was `^1.7.2`) —
+  the upcoming release that makes these props work. It is the first
+  version that reads the per-track `data-waveform` this wrapper now
+  emits, and it fixes the hero layout's cover art for artless tracks, the
+  chapter list / play-state overlay landing on the wrong track, chapter
+  seeks into another track or under `preload: 'none'`, `H:MM:SS` chapter
+  times, the lock-screen album sticking between tracks, and keyboard
+  shortcuts hijacking Cmd/Ctrl combinations. The range also drops 1.7.2
+  and 1.7.3, where a hero / grid container's `data-layout` leaked into the
+  embedded player (fixed in 1.7.4).
+- **Requires `@arraypress/waveform-player@^1.24.5`** (was `^1.23.0`), the
+  playlist core's own floor.
+
 ## [0.4.0] — 2026-08-07
 
 ### Added
