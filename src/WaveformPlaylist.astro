@@ -153,6 +153,8 @@ const {
 	barWidth,
 	barSpacing,
 	barRadius,
+	waveformGradient,
+	seekHandle,
 	// Colours
 	colorPreset,
 	waveformColor,
@@ -170,6 +172,9 @@ const {
 	bpm,
 	buttonAlign,
 	buttonStyle,
+	buttonSize,
+	buttonRadius,
+	artworkPosition,
 	// Accessibility + error UI
 	accessibleSeek,
 	seekLabel,
@@ -276,6 +281,9 @@ setNum('data-samples', samples);
 setNum('data-bar-width', barWidth);
 setNum('data-bar-spacing', barSpacing);
 setNum('data-bar-radius', barRadius);
+setStr('data-waveform-gradient', waveformGradient ?? null);
+// Seekbar-style drag handle + hover brightness.
+setBool('data-seek-handle', seekHandle);
 
 // Colours — `colorPreset` is `'dark' | 'light' | null`; only emit non-null.
 if (colorPreset === 'dark' || colorPreset === 'light') {
@@ -306,6 +314,11 @@ setBool('data-show-bpm', showBPM);
 setNum('data-bpm', bpm);
 setStr('data-button-align', buttonAlign ?? null);
 setStr('data-button-style', buttonStyle ?? null);
+// Button sizing: a number is px, a string (e.g. '4rem') is used verbatim —
+// the core's parser tells them apart. `0` (a square button) must survive.
+setStr('data-button-size', buttonSize != null ? String(buttonSize) : null);
+setStr('data-button-radius', buttonRadius != null ? String(buttonRadius) : null);
+setStr('data-artwork-position', artworkPosition ?? null);
 
 // Accessibility + error UI
 setBool('data-accessible-seek', accessibleSeek);

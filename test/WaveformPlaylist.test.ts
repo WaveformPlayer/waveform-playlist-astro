@@ -333,6 +333,39 @@ describe('<WaveformPlaylist> — forwarded player options', () => {
 		expect(getAttr(tag, 'data-cross-origin')).toBe('anonymous');
 	});
 
+	it('emits waveformGradient, seekHandle, buttonSize, buttonRadius, artworkPosition', async () => {
+		const tag = containerTag(
+			await render({
+				tracks: ONE_TRACK,
+				waveformGradient: 'diagonal',
+				seekHandle: true,
+				buttonSize: '4rem',
+				buttonRadius: 0,
+				artworkPosition: 'button',
+			})
+		);
+		expect(getAttr(tag, 'data-waveform-gradient')).toBe('diagonal');
+		expect(getAttr(tag, 'data-seek-handle')).toBe('true');
+		expect(getAttr(tag, 'data-button-size')).toBe('4rem');
+		// 0 is a real value (a square button), not "unset".
+		expect(getAttr(tag, 'data-button-radius')).toBe('0');
+		expect(getAttr(tag, 'data-artwork-position')).toBe('button');
+	});
+
+	it('emits a numeric buttonSize as its number string (the core reads it as px)', async () => {
+		const tag = containerTag(await render({ tracks: ONE_TRACK, buttonSize: 48 }));
+		expect(getAttr(tag, 'data-button-size')).toBe('48');
+	});
+
+	it('omits waveformGradient / seekHandle / button sizing / artworkPosition when unset', async () => {
+		const tag = containerTag(await render({ tracks: ONE_TRACK }));
+		expectNoAttr(tag, 'data-waveform-gradient');
+		expectNoAttr(tag, 'data-seek-handle');
+		expectNoAttr(tag, 'data-button-size');
+		expectNoAttr(tag, 'data-button-radius');
+		expectNoAttr(tag, 'data-artwork-position');
+	});
+
 	it('emits colorPreset only when it is dark or light (not null)', async () => {
 		const dark = containerTag(await render({ tracks: ONE_TRACK, colorPreset: 'dark' }));
 		expect(getAttr(dark, 'data-color-preset')).toBe('dark');

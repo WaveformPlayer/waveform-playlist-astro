@@ -23,6 +23,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `index.d.ts` (1.8.0 declares them all); against an older core they fall
   back to the same 1.8.0 shapes instead of degrading to `unknown`.
 
+### Fixed
+
+- `waveformGradient`, `seekHandle`, `buttonSize`, `buttonRadius` and
+  `artworkPosition` reach the embedded player, as `data-waveform-gradient`,
+  `data-seek-handle`, `data-button-size`, `data-button-radius` and
+  `data-artwork-position`. All five are core player options the props type
+  inherited, but the component never destructured or emitted them — they
+  typechecked and were silently dropped. `buttonRadius={0}` emits `"0"`.
+
 ## [0.4.0] — 2026-08-07
 
 ### Added
