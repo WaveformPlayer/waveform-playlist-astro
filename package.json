@@ -47,10 +47,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arraypress/waveform-playlist-astro.git"
+    "url": "git+https://github.com/WaveformPlayer/waveform-playlist-astro.git"
   },
   "bugs": {
-    "url": "https://github.com/arraypress/waveform-playlist-astro/issues"
+    "url": "https://github.com/WaveformPlayer/waveform-playlist-astro/issues"
   },
   "homepage": "https://waveformplayer.com",
   "funding": {
